@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<head>
+  <title>Product Description Generator</title>
+  <link
+    rel="shortcut icon"
+    href="{{ url_for('static', filename='dog.png') }}"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+  <style>
+    #copy-btn {
+      /* Add your existing styling here */
+      transition: background-color 0.3s;
+
+    }
+
+    #copy-btn.success {
+      background-color: #4CAF50;
+    }
+  </style>
+</head>
+
+<body>
+  <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
+  <h3>Generate a Product Description!</h3>
+  <form action="/" method="post">
+    <input type="text" name="product_name" placeholder="Enter a product name" required />
+    <input type="text" name="characteristics" placeholder="Enter the characteristics of the product" required />
+    <input type="submit" value="Generate!" />
+  </form>
+  {% if result %}
+  <div class="result">
+    <h2>Product description<br><br></h2>
+    {{ result | safe }}
+  </div>
+  {% endif %}
+
+  <div><br><br><h1 style="text-align: center;"><br>⬇</h1><br></h1>
+    <h1 style="text-align: center;"><br>Product Description HTML Code Maker</h1><br></h1>
+    <p style="text-align: center;">Paste the content of the generated product description in the relevant sections and press the Generate HTML code button.</p>
+    <form>
+  
+  
+      <label for="productname"><h1> Product name</h1>      </label>
+      <input type="text" id="productname" name="productname"><br><br>
+  
+      <label for="productname">      <h1>Product Page Title</h1>      
+        <h1></h1>
+        
+        <br>
+  
+
+  
+        <br>-<br><br>
+  
+        <h5>Name + Main characteristic</h5>
+      </label>
+  
+      <input type="text" id="producttile" name="producttile"><br><br>
+  
+
+  
+      <label for="header1">
+        
+        <h1>Title</h1>
+        
+        <br>
+  
+  
+        <br>-<br><br>
+  
+        <h5>One strong sentence that converts using emotion and shows the good benefits of the product.</h5>
+      </label>
+  
+      <input type="text" id="header1" name="header1"><br><br>
+  
+      <label for="paragraph1">    <h1>Text under Title</h1>
+        
+        
+        <br>
+  
+  
+        <br>-<br><br>
+  
+        <h5>Elaborate on the Title and go deeper, be precise, name all the relevant benefits which convert using emotion and which feeling it will give you or others.</h5>
+      </label>
+            
+  
+    
+  
+      <textarea id="paragraph1" name="paragraph1" rows="4" cols="50"></textarea><br><br>
+      
+  
+
+  
+  
+      <label for="header2"><h1>Header 1</h1>
+        
+        <br>
+    
+        </label>
+        <input type="text" id="header2" name="header2"><br><br>
+  
+      <label for="paragraph2">      
+        <h1>Explain benefit</h1>
+        
+        <br>
+  
+  
+        <br>-<br><br>
+  
+        <h5>In detail, short but precise.</h5>
+      </label>
+      
+      <textarea id="paragraph2" name="paragraph2" rows="4" cols="50"></textarea><br><br>
+  
+
+  
+      <label for="header3">      <h1>Header 2</h1>
+        
+        <br>
+  
+  
+        <br>-<br><br>
+  
+  
+      </label>
+      <input type="text" id="header3" name="header3"><br><br>
+  
+      <label for="paragraph3">      <h1>Explain benefit 2
+      </h1>
+        
+        <br>
+  
+  
+        <br>-<br><br>
+  
+        <h5>In detail, short but precise.</h5>
+      </label>
+      <textarea id="paragraph3" name="paragraph3" rows="4" cols="50"></textarea><br><br>
+  
+
+  
+      <label for="header4">     <h1>Header 3</h1>
+        
+        <br>
+  
+  
+        <br>-<br><br>
+  
+  
+      </label>
+      <input type="text" id="header4" name="header4"><br><br>
+  
+      <label for="paragraph4"><h1>Explain benefit 3
+      </h1>
+        
+        <br>
+  
+  
+        <br>-<br><br>
+  
+        <h5>In detail, short but precise.</h5>
+      </label>
+      <textarea id="paragraph4" name="paragraph4" rows="4" cols="50"></textarea><br><br>
+  
+
+  
+      <input type="button" value="Generate HTML Code" onclick="updateHTML()">
+    </form>
+  
+  
+    <br>
+    <div class="result-container" id="result"></div>
+    <h2 id="raw-html-label" style="text-align: center; display: none; margin: 20px auto;">Raw HTML code</h2>
+    <textarea id="raw-html" style="display: none; margin: 20px auto; width: 80%; height: 400px; font-size: 18px; text-align: center;"></textarea>
+    <button id="copy-btn" onclick="copyToClipboard()" style="display: none; margin: 0 auto; margin-bottom: 40px;">Copy to Clipboard</button>
+    <h2 id="product-title-label" style="text-align: center; display: none; margin: 20px auto;">Full Product Name</h2>
+    <h1 id="product-title" style="text-align: center; display: none; margin: 20px auto; font-size: 40px;"></h1>
+    <button id="copy-title-btn" onclick="copyTitleToClipboard()" style="display: none; margin-bottom: 40px; margin: 0 auto;">Copy Title to Clipboard</button>
+    <br>
+    <script>
+      function updateHTML() {
+  
+  
+    // rest of the function code...
+  
+  
+        var productname = document.getElementById("productname").value;
+        var producttile = document.getElementById("producttile").value;
+        var header1 = document.getElementById("header1").value;
+        var paragraph1 = document.getElementById("paragraph1").value;
+        var header2 = document.getElementById("header2").value;
+        var paragraph2 = document.getElementById("paragraph2").value;
+        var header3 = document.getElementById("header3").value;
+        var paragraph3 = document.getElementById("paragraph3").value;
+        var header4 = document.getElementById("header4").value;
+        var paragraph4 = document.getElementById("paragraph4").value;
+        var copyBtn = document.getElementById("copy-btn"); 
+  
+        var result = '<br><br><div class="grid"><div class="grid__item large--eight-twelfths push--large--two-twelfths"><div id="productDescription" class="product-single__description rte spacer-bottom-none"><h2 style="text-align: center;" data-mce-style="text-align: center;"><strong>Product Page Preview</strong></h2>';
+        result += '<br><p style="text-align: center;" data-mce-style="text-align: center;"><strong><span style="color: #ff0000;" data-mce-style="color: #ff0000;">*AKTUALISIERUNG</span></strong><em><strong><span style="color: #ff0000;" data-mce-style="color: #ff0000;">&nbsp;</span></strong><span style="color: #ff0000;" data-mce-style="color: #ff0000;"><span style="color: #000000;" data-mce-style="color: #000000;">|</span></span><strong><span style="color: #ff0000;" data-mce-style="color: #ff0000;">&nbsp;</span></strong>Aufgrund der großen Nachfrage nach<strong> ' + productname + '</strong>&nbsp;ist der Vorrat begrenzt!</em><br><strong><span style="font-weight: 400;" data-mce-style="font-weight: 400;"><br></span></strong></p>      <h4 style="text-align: center;" data-mce-style="text-align: center;"><strong></strong></h4>';
+        result += '<h3 style="text-align: center;" data-mce-style="text-align: center;"><strong>' + header1 + '</strong></h3>';
+        result += '<p style="text-align: center;" data-mce-style="text-align: center;">' + paragraph1 + '</p>';
+        result += '<p style="text-align: center;" data-mce-fragment="1" data-mce-style="text-align: center;"><br><img src="https://cdn.shopify.com/s/files/1/0557/9063/3152/files/ezgif.com-gif-maker_d88724ba-f0f2-414b-9498-60c64885d26f_480x480.gif?v=1667564972" alt="" style="display: block; margin-left: auto; margin-right: auto;" width="479" height="477" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0557/9063/3152/files/ezgif.com-gif-maker_d88724ba-f0f2-414b-9498-60c64885d26f_480x480.gif?v=1667564972" data-mce-style="display: block; margin-left: auto; margin-right: auto;"><br></p>' + '<h3 style="text-align: center;" data-mce-style="text-align: center;"><strong>' + header2 + '</strong></h3>';
+        result += '<p style="text-align: center;" data-mce-style="text-align: center;">' + paragraph2 + '<br><br><img src="https://cdn.shopify.com/s/files/1/0557/9063/3152/files/RICA-GNBrandedMedia_6STORES11222_1_ee1e10aa-6ba5-4f4a-87c0-b1ae06c107d5_480x480.png?v=1667564718" alt="" style="display: block; margin-left: auto; margin-right: auto;" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0557/9063/3152/files/RICA-GNBrandedMedia_6STORES11222_1_ee1e10aa-6ba5-4f4a-87c0-b1ae06c107d5_480x480.png?v=1667564718" data-mce-style="display: block; margin-left: auto; margin-right: auto;"></p>';
+  
+        result += '<h3 style="text-align: center;" data-mce-style="text-align: center;"><strong>' + header3 + '</strong></h3>';
+        result += '<p style="text-align: center;" data-mce-style="text-align: center;">' + paragraph3 + '</p><p style="text-align: center;" data-mce-fragment="1" data-mce-style="text-align: center;"><br><img src="https://cdn.shopify.com/s/files/1/0557/9063/3152/files/dd97c6bfe3da2a823f3c583bcb5c5c4be1534281_720x_c36346c8-fde2-4082-9139-76febed245a3_480x480.jpg?v=1667564756" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0557/9063/3152/files/dd97c6bfe3da2a823f3c583bcb5c5c4be1534281_720x_c36346c8-fde2-4082-9139-76febed245a3_480x480.jpg?v=1667564756"><br><br></p>';
+        result += '<h3 style="text-align: center;" data-mce-style="text-align: center;"><strong>' + header4 + '</strong></h3>';
+  
+  
+        result += '<p style="text-align: center;" data-mce-style="text-align: center;">' + paragraph4 + '</p><p style="text-align: center;" data-mce-fragment="1" data-mce-style="text-align: center;"><img src="https://cdn.shopify.com/s/files/1/0557/9063/3152/files/9b499945260d0fb52cb9301daf6a0e76ddad45e1_719x_1cb20428-7fdd-4d31-a1f7-631a6a5f2e67_480x480.jpg?v=1667564780" alt="" data-mce-fragment="1" data-mce-src="https://cdn.shopify.com/s/files/1/0557/9063/3152/files/9b499945260d0fb52cb9301daf6a0e76ddad45e1_719x_1cb20428-7fdd-4d31-a1f7-631a6a5f2e67_480x480.jpg?v=1667564780"><br><br></p><table><tbody><tr><td><p style="text-align: center;" data-mce-style="text-align: center;"><span style="font-weight: 400;" data-mce-style="font-weight: 400;">Bestellen Sie Ihren ';
+        result += productname + '</span>&nbsp;<strong>HEUTE</strong><span style="font-weight: 400;" data-mce-style="font-weight: 400;"> und profitieren Sie von </span><strong>50% RABATT</strong><span style="font-weight: 400;" data-mce-style="font-weight: 400;"> und kostenlosem Versand.</span></p></td></tr></tbody></table><br><h3 style="text-align: center;" data-mce-fragment="1" data-mce-style="text-align: center;"><b data-mce-fragment="1">UNSERE GARANTIEN</b></h3><p data-mce-fragment="1"><span style="font-weight: 400;" data-mce-fragment="1" data-mce-style="font-weight: 400;"><span data-mce-fragment="1">🔒Sichere Zahlung garantiert: <meta charset="UTF-8">Wir verwenden die in Deutschland, Österreich, der Schweiz und Liechtenstein gängigsten Zahlungsanbieter, nämlich&nbsp;Paypal, Kreditkarte&nbsp;und&nbsp;Klarna.</span></span></p><p data-mce-fragment="1"><span style="font-weight: 400;" data-mce-fragment="1" data-mce-style="font-weight: 400;"><span data-mce-fragment="1">✉️ </span><meta charset="UTF-8"> <strong data-mce-fragment="1"><span data-mce-fragment="1">&nbsp;</span></strong><span data-mce-fragment="1">Kundendienst 24/7 erreichbar: Wir haben ein starkes Support-Team, das Ihre Fragen innerhalb von 12 Stunden beantwortet und 7 Tage in der Woche zur Verfügung steht, um Ihnen bei allen Fragen zu helfen, die Sie haben könnten! &nbsp;E-Mail: info@mao-wow.de</span></span></p><p data-mce-fragment="1"><span style="font-weight: 400;" data-mce-fragment="1" data-mce-style="font-weight: 400;">💰 <meta charset="UTF-8"> <span data-mce-fragment="1">Mögen Sie Ihr Produkt nicht?: Überhaupt kein Problem! Wir haben eine 30-tägige "</span>Geld-zurück-Garantie".&nbsp;Kundenzufriedenheit ist unsere oberste Priorität.&nbsp;</span><span style="font-weight: 400;" data-mce-fragment="1" data-mce-style="font-weight: 400;">Deshalb bieten wir eine Geld-zurück-Garantie an.</span></p><p data-mce-fragment="1">📦 Track &amp; Trace: <meta charset="UTF-8"><span data-mce-fragment="1">Jede Bestellung hat Echtzeit-Tracking-Details und wird mit einer Versicherung für den unwahrscheinlichen Fall versandt, dass ein Paket auf dem Transportweg verloren geht oder gestohlen wird.&nbsp;</span></p><h4 style="text-align: center;" data-mce-style="text-align: center;"><span data-mce-fragment="1"><strong></strong></span></h4></div></div><br><br>'
+  
+        
+        
+        document.getElementById("result").innerHTML = result;
+  
+  
+        var rawHtml = document.getElementById("raw-html");
+        document.getElementById("raw-html").style.display = "block";
+        document.getElementById("raw-html-label").style.display = "block";
+        var rawResult = result.replace('<br><br><div class="grid"><div class="grid__item large--eight-twelfths push--large--two-twelfths"><div id="productDescription" class="product-single__description rte spacer-bottom-none"><h2 style="text-align: center;" data-mce-style="text-align: center;"><strong>Product Page Preview</strong></h2>', '');
+  
+          rawHtml.value = rawResult;
+  
+          copyBtn.style.display = "block";
+          // Add this line at the end of the updateHTML function to display the product title
+          document.getElementById("product-title").innerHTML = producttile;
+  
+          // Show the product title and the new copy button
+          document.getElementById("product-title-label").style.display = "block";
+          document.getElementById("product-title").style.display = "block";
+          document.getElementById("copy-title-btn").style.display = "block";
+  
+    
+  }
+  
+  function copyToClipboard() {
+        var copyText = document.getElementById("raw-html");
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand("copy");
+  
+        var copyButton = document.getElementById("copy-btn");
+        copyButton.innerHTML = "Successfully Copied!";
+        copyButton.classList.add("success");
+  
+        setTimeout(function() {
+          copyButton.innerHTML = "Copy to Clipboard";
+          copyButton.classList.remove("success");
+        }, 2000);
+      }
+      function copyTitleToClipboard() {
+      var productTitle = document.getElementById("product-title").innerText;
+      var tempInput = document.createElement("input");
+      tempInput.value = productTitle;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      tempInput.setSelectionRange(0, 99999); // For mobile devices
+      document.execCommand("copy");
+      document.body.removeChild(tempInput);
+  
+      var copyTitleButton = document.getElementById("copy-title-btn");
+      copyTitleButton.innerHTML = "Successfully Copied!";
+      copyTitleButton.classList.add("success");
+  
+      setTimeout(function() {
+        copyTitleButton.innerHTML = "Copy Title to Clipboard";
+        copyTitleButton.classList.remove("success");
+      }, 2000);
+    }
+  
+    // ...existing code...
+  
+    </script>
+  </div>
+</body>
