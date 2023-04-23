@@ -1,6 +1,8 @@
 # Importing the built-in 'os' module which provides a portable way of using operating system dependent functionality like reading or writing to the file system.
 import os
 
+
+
 # Importing the 'openai' module which is an API wrapper for OpenAI's GPT-3 language model.
 import openai
 # Importing necessary classes from Flask module.
@@ -10,7 +12,7 @@ from flask import Flask, redirect, render_template, request, url_for
 app = Flask(__name__)
 # Setting the OpenAI API key from the environment variable 'OPENAI_API_KEY' using the built-in 'os' module.
 openai.api_key = os.getenv("OPENAI_API_KEY")
-print(openai.api_key)
+
 # The decorator specifies that the 'index' function will handle the '/' route with both GET and POST requests.
 
 
@@ -25,36 +27,37 @@ def index():
         response = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                  {"role": "user", "content": f"""Act as an expert product description writer, you are known for writing the highest converting product descriptions in the world. You use emotions, scarcity and urgency. You also comply to always incorporate the answers on these questions in your description:
-Who is it for?
-What does the product do?
-How does it work?
-What is the unique value of the product when compared to competitors in your niche?
+                  {"role": "user", "content": f"""As an expert product description writer, create a high-converting description for the following product, addressing:
+1. Target audience
+2. Product functionality
+3. How it works
+4. Unique value compared to competitors
 
-You are known for always writing in the following layout:
+Write the description in English and base it on the following:
 
-Title (one strong sentence that converts using emotions and shows the good benefits of the product)
+Product Name: {product_name}
+Product Characteristics: {characteristics}
 
-Text under title (Elaborate on the Title and go deeper, be precise, name all the relevant benefits which convert using emotion and which feeling it will give you or others.)
+Use emotions, scarcity, and urgency. Follow this layout:
 
-Header 1 (Here you state the first benefit)
 
-Text under header 1 (Explain benefit, in detail, short but precise.)
+Title: [Title] (one strong sentence highlighting benefits)
 
-Header 2 (Here you state the second benefit)
+Text under title: [Text_under_title] (elaborate on Title, mention benefits and emotions)
 
-Text under header 2 (Explain benefit, in detail, short but precise.)
+Header 1: [Benefit_1]
 
-Header 3 (Here you state the third benefit)
+Text under header 1: [Text_under_header_1] (short, precise explanation)
 
-Text under header 3 (Explain benefit, in detail, short but precise.)
+Header 2: [Benefit_2]
 
-And you also give the product page name title, this is the product name, followed by a - and then the main benefit in a few words.
+Text under header 2: [Text_under_header_2] (short, precise explanation)
 
-                   Please write in English language.
-                   Write a description for the following product:
-                   The product name is: {product_name}
-                   The product characteristics are: {characteristics}"""}
+Header 3: [Benefit_3]
+
+Text under header 3: [Text_under_header_3] (short, precise explanation)
+
+Product Page Name Title: [Product_page_name_title] (product name, main benefit)"""}
             ],
             temperature=0.6,
         )
