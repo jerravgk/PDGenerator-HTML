@@ -10,7 +10,7 @@ from flask import Flask, redirect, render_template, request, url_for
 app = Flask(__name__)
 # Setting the OpenAI API key from the environment variable 'OPENAI_API_KEY' using the built-in 'os' module.
 openai.api_key = os.getenv("OPENAI_API_KEY")
-
+print(openai.api_key)
 # The decorator specifies that the 'index' function will handle the '/' route with both GET and POST requests.
 
 
