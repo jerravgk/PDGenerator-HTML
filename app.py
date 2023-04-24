@@ -11,7 +11,7 @@ from flask import Flask, redirect, render_template, request, url_for, jsonify
 # Creating a Flask instance and assigning it to the 'app' variable.
 app = Flask(__name__)
 # Setting the OpenAI API key from the environment variable 'OPENAI_API_KEY' using the built-in 'os' module.
-openai.api_key = "123"
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
 @app.route("/api", methods=["POST"])
