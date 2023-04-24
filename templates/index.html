@@ -22,17 +22,27 @@
 <body>
   <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
   <h3>Generate a Product Description!</h3>
-  <form action="/" method="post">
+  {% if error %}
+  <p id="error" class="error">{{ error }}</p>
+{% endif %}
+  <form method="POST" id="your-form-id">
     <input type="text" name="product_name" placeholder="Enter a product name" required />
     <textarea name="characteristics" placeholder="Enter the characteristics of the product" required></textarea>
     <input type="submit" value="Generate!" />
+
   </form>
-  {% if result %}
-  <div class="result">
-    <h2>Product description<br><br></h2>
-    {{ result | safe }}
+  <div class="spinner-container" id="spinner-container" style="display:none;">
+    <div class="spinner-content">
+      <div class="spinner"></div>
+      <h6 style="font-size: 14px;">The AI is currently generating, please be patient...</h6>
+    </div>
   </div>
-  {% endif %}
+
+  <div id="result-generate-container" class="result-generate">
+
+    <button id="clear-btn" class="generate-btn">Clear</button>
+  </div>
+
 
   <div><br><br><h1 style="text-align: center;"><br>⬇</h1><br></h1>
     <h1 style="text-align: center;"><br>Product Description HTML Code Maker</h1><br></h1>
@@ -274,6 +284,57 @@
   
     </script>
   </div>
+
+  <script>
+    // Hide the result container by default
+    const resultContainer = document.getElementById("result-generate-container");
+    resultContainer.style.display = "none";
+
+    document.getElementById("your-form-id").addEventListener("submit", async function (event) {
+      event.preventDefault(); // Prevent the default form submission behavior
+    
+      // Show the spinner while waiting for the API response
+      document.getElementById("spinner-container").style.display = "block";
+    
+      // Collect form data
+      const formData = new FormData(event.target);
+      const product_name = formData.get("product_name");
+      const characteristics = formData.get("characteristics");
+    
+      // Make an asynchronous request to the server
+      const response = await fetch("/api", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ product_name, characteristics }),
+      });
+    
+      // Parse the JSON response
+      const result = await response.json();
+    
+      if (result.error) {
+        // Handle the error, e.g., display an error message
+        document.getElementById("result-generate-container").innerHTML = `${result.error}`;
+        resultContainer.style.display = "block";
+      }
+      else {
+        // Update the page with the result, e.g., display the result in an element with ID "result"
+        document.getElementById("result-generate-container").innerHTML = `<h1>Product description<br><br></h1>${result.content}    <br><br><button id="clear-btn" class="generate-btn">Clear</button>`;
+        resultContainer.style.display = "block";
+        document.getElementById("clear-btn").addEventListener("click", function () {
+        // Set the innerHTML of the result-generate-container to an empty string
+        document.getElementById("result-generate-container").innerHTML = "";
+        // Hide the result-generate-container
+        document.getElementById("result-generate-container").style.display = "none";
+        });
+        }
+    
+      // Hide the spinner when the API response is received
+      document.getElementById("spinner-container").style.display = "none";
+    });
+  
+    </script>
 </body>
 
 
